@@ -297,7 +297,7 @@ header {
 }
 """
 
-def base_html(title, body, root='./'):
+def base_html(title, body):
     return f"""<!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -309,7 +309,7 @@ def base_html(title, body, root='./'):
 <body>
 <header>
   <div class="header-inner">
-    <a class="site-title" href="{root}index.html">media-log</a>
+    <a class="site-title" href="/media-log/index.html">media-log</a>
     <span class="site-subtitle">film, anime, dizi notları</span>
   </div>
 </header>
@@ -357,7 +357,7 @@ for cat in CATEGORIES:
 
         content = f"""
 <div class="container">
-  <a class="back-link" href="../../index.html">← back</a>
+  <a class="back-link" href="/media-log/index.html">← back</a>
   <div class="entry-header">
     <h1>{meta.get('title', s)}</h1>
     <div class="entry-attrs">
@@ -369,7 +369,7 @@ for cat in CATEGORIES:
   <div class="entry-body">{md_to_html(body)}</div>
 </div>"""
 
-        page = base_html(meta.get('title', s), content, root='../../')
+        page = base_html(meta.get('title', s), content)
         out_path = f'{OUT}/{cat}/{s}.html'
         with open(out_path, 'w', encoding='utf-8') as f:
             f.write(page)
