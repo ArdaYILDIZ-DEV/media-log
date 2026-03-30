@@ -132,22 +132,13 @@ header {
   color: var(--accent);
 }
 .entry-status {
-  font-size: 0.8rem;
-  color: var(--muted);
+  font-size: 0.82rem;
   font-style: italic;
 }
-.status-planned {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
-  border-radius: 2px;
-  background: #ffffff08;
-  color: var(--muted);
-  border: 1px dashed #3a3a3a;
-  font-style: normal;
-}
+.status-watching  { color: #a78ee6; }
+.status-finished  { color: #7ec89a; }
+.status-dropped   { color: #c87e7e; }
+.status-planned   { color: var(--muted); }
 .entry-date {
   font-family: 'DM Mono', monospace;
   font-size: 0.7rem;
@@ -261,7 +252,7 @@ header {
     <div class="entry-meta">
       <span class="tag tag-anime">Anime</span>
       <span class="entry-score">10/10</span>
-      <span class="entry-status">Watching</span>
+      <span class="entry-status status-watching">Watching</span>
     </div>
   </div>
   <div class="entry-date">30 Mar 2026</div>
@@ -272,7 +263,7 @@ header {
     <div class="entry-meta">
       <span class="tag tag-film">Film</span>
       
-      <span class="status-planned">planned</span>
+      <span class="entry-status status-planned">Planned</span>
     </div>
   </div>
   <div class="entry-date">30 Mar 2026</div>
@@ -283,7 +274,7 @@ header {
     <div class="entry-meta">
       <span class="tag tag-show">Show</span>
       
-      <span class="entry-status">Dropped</span>
+      <span class="entry-status status-dropped">Dropped</span>
     </div>
   </div>
   <div class="entry-date">27 Feb 2026</div>
@@ -294,7 +285,7 @@ header {
     <div class="entry-meta">
       <span class="tag tag-show">Show</span>
       <span class="entry-score">10/10</span>
-      <span class="entry-status">Finished</span>
+      <span class="entry-status status-finished">Finished</span>
     </div>
   </div>
   <div class="entry-date">15 Feb 2026</div>
