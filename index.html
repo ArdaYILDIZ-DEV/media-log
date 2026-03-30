@@ -227,6 +227,26 @@ header {
 }
 .entry-body strong { color: #e8e3db; }
 
+/* ── search ── */
+.search-wrap {
+  margin-bottom: 1rem;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--accent); }
+
 /* ── filters ── */
 .filters {
   display: flex;
@@ -281,6 +301,9 @@ header {
 </header>
 
 <div class="container">
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="search... (score:9, year:2019, studio:mappa)">
+  </div>
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="anime">Anime</button>
@@ -294,7 +317,7 @@ header {
   </div>
   <div class="section-label">recent entries — <span id="count">4</span> total</div>
   <div class="entries">
-<a href="animes/sentenced-to-be-a-hero.html" class="entry-card" data-type="anime" data-status="watching">
+<a href="animes/sentenced-to-be-a-hero.html" class="entry-card" data-type="anime" data-status="watching" data-title="sentenced to be a hero" data-score="10" data-year="2026" data-studio="studio kai">
   <div>
     <div class="entry-title">Sentenced to Be a Hero</div>
     <div class="entry-meta">
@@ -305,7 +328,7 @@ header {
   </div>
   <div class="entry-date">30 Mar 2026</div>
 </a>
-<a href="films/project-hail-mary.html" class="entry-card" data-type="film" data-status="planned">
+<a href="films/project-hail-mary.html" class="entry-card" data-type="film" data-status="planned" data-title="project hail mary" data-score="" data-year="2026" data-studio="amazon mgm">
   <div>
     <div class="entry-title">Project Hail Mary</div>
     <div class="entry-meta">
@@ -316,7 +339,7 @@ header {
   </div>
   <div class="entry-date">30 Mar 2026</div>
 </a>
-<a href="shows/the-umbrella-academy.html" class="entry-card" data-type="show" data-status="dropped">
+<a href="shows/the-umbrella-academy.html" class="entry-card" data-type="show" data-status="dropped" data-title="the umbrella academy" data-score="" data-year="2019" data-studio="netflix">
   <div>
     <div class="entry-title">The Umbrella Academy</div>
     <div class="entry-meta">
@@ -327,7 +350,7 @@ header {
   </div>
   <div class="entry-date">27 Feb 2026</div>
 </a>
-<a href="shows/arcane.html" class="entry-card" data-type="show" data-status="finished">
+<a href="shows/arcane.html" class="entry-card" data-type="show" data-status="finished" data-title="arcane" data-score="10" data-year="2021" data-studio="riot games / fortiche">
   <div>
     <div class="entry-title">Arcane</div>
     <div class="entry-meta">
@@ -343,22 +366,57 @@ header {
 <script>
 const btns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.entry-card');
+const searchInput = document.querySelector('.search-input');
+let activeFilter = 'all';
+
+function applyFilters() {
+  const raw = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+
+  // parse search query
+  let titleQ = '', scoreQ = '', yearQ = '', studioQ = '';
+  if (raw) {
+    const scoreM = raw.match(/score:([^ ]+)/);
+    const yearM  = raw.match(/year:([^ ]+)/);
+    const studioM = raw.match(/studio:([^ ]+)/);
+    if (scoreM)  scoreQ  = scoreM[1];
+    if (yearM)   yearQ   = yearM[1];
+    if (studioM) studioQ = studioM[1];
+    titleQ = raw.replace(/score:[^ ]+/g,'').replace(/year:[^ ]+/g,'').replace(/studio:[^ ]+/g,'').trim();
+  }
+
+  cards.forEach(card => {
+    const type   = card.dataset.type;
+    const status = card.dataset.status;
+    const title  = card.dataset.title  || '';
+    const score  = card.dataset.score  || '';
+    const year   = card.dataset.year   || '';
+    const studio = card.dataset.studio || '';
+
+    const filterOk = activeFilter === 'all' || type === activeFilter || status === activeFilter;
+    const titleOk  = !titleQ  || title.includes(titleQ);
+    const scoreOk  = !scoreQ  || score === scoreQ;
+    const yearOk   = !yearQ   || year === yearQ;
+    const studioOk = !studioQ || studio.includes(studioQ);
+
+    const show = filterOk && titleOk && scoreOk && yearOk && studioOk;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  document.getElementById('count').textContent = visible;
+}
+
 btns.forEach(btn => {
   btn.addEventListener('click', () => {
     btns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.filter;
-    let visible = 0;
-    cards.forEach(card => {
-      const type = card.dataset.type;
-      const status = card.dataset.status;
-      const show = f === 'all' || type === f || status === f;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    document.getElementById('count').textContent = visible;
+    activeFilter = btn.dataset.filter;
+    applyFilters();
   });
 });
+
+searchInput.addEventListener('input', applyFilters);
 </script>
 </body>
 </html>

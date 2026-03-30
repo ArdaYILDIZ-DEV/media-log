@@ -227,6 +227,26 @@ header {
 }
 .entry-body strong { color: #e8e3db; }
 
+/* ── search ── */
+.search-wrap {
+  margin-bottom: 1rem;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--accent); }
+
 /* ── filters ── */
 .filters {
   display: flex;
