@@ -292,6 +292,43 @@ header {
 }
 .entry-body strong { color: #e8e3db; }
 
+/* ── filters ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.filter-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #c8a97e10;
+}
+.filter-divider {
+  width: 1px;
+  height: 1rem;
+  background: var(--border);
+  margin: 0 0.2rem;
+}
+
 /* ── responsive ── */
 @media (max-width: 600px) {
   .entry-header h1 { font-size: 1.5rem; }
@@ -403,8 +440,10 @@ for e in all_entries:
         status_html = f'<span class="entry-status {css}">{e["status"]}</span>'
     else:
         status_html = ''
+    t = e['type'].lower()
+    st = e['status'].lower()
     cards += f"""
-<a href="{e['url']}" class="entry-card">
+<a href="{e['url']}" class="entry-card" data-type="{t}" data-status="{st}">
   <div>
     <div class="entry-title">{e['title']}</div>
     <div class="entry-meta">
@@ -418,10 +457,41 @@ for e in all_entries:
 
 index_body = f"""
 <div class="container">
-  <div class="section-label">recent entries — {len(all_entries)} total</div>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="anime">Anime</button>
+    <button class="filter-btn" data-filter="film">Film</button>
+    <button class="filter-btn" data-filter="show">Show</button>
+    <span class="filter-divider"></span>
+    <button class="filter-btn" data-filter="watching">Watching</button>
+    <button class="filter-btn" data-filter="finished">Finished</button>
+    <button class="filter-btn" data-filter="dropped">Dropped</button>
+    <button class="filter-btn" data-filter="planned">Planned</button>
+  </div>
+  <div class="section-label">recent entries — <span id="count">{len(all_entries)}</span> total</div>
   <div class="entries">{cards}
   </div>
-</div>"""
+</div>
+<script>
+const btns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.entry-card');
+btns.forEach(btn => {{
+  btn.addEventListener('click', () => {{
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    let visible = 0;
+    cards.forEach(card => {{
+      const type = card.dataset.type;
+      const status = card.dataset.status;
+      const show = f === 'all' || type === f || status === f;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    }});
+    document.getElementById('count').textContent = visible;
+  }});
+}});
+</script>"""
 
 with open(f'{OUT}/index.html', 'w', encoding='utf-8') as f:
     f.write(base_html('media-log', index_body))
