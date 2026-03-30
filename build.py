@@ -197,22 +197,13 @@ header {
   color: var(--accent);
 }
 .entry-status {
-  font-size: 0.8rem;
-  color: var(--muted);
+  font-size: 0.82rem;
   font-style: italic;
 }
-.status-planned {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.45rem;
-  border-radius: 2px;
-  background: #ffffff08;
-  color: var(--muted);
-  border: 1px dashed #3a3a3a;
-  font-style: normal;
-}
+.status-watching  { color: #a78ee6; }
+.status-finished  { color: #7ec89a; }
+.status-dropped   { color: #c87e7e; }
+.status-planned   { color: var(--muted); }
 .entry-date {
   font-family: 'DM Mono', monospace;
   font-size: 0.7rem;
@@ -404,12 +395,12 @@ all_entries.sort(key=lambda e: e['date'], reverse=True)
 
 cards = ''
 for e in all_entries:
-    is_planned = e['status'].lower() == 'planned'
+    s = e['status'].lower()
+    is_planned = s == 'planned'
     score_html = '' if is_planned else (f'<span class="entry-score">{e["score"]}</span>' if e['score'] else '')
-    if is_planned:
-        status_html = '<span class="status-planned">planned</span>'
-    elif e['status']:
-        status_html = f'<span class="entry-status">{e["status"]}</span>'
+    if e['status']:
+        css = f'status-{s}' if s in ('watching', 'finished', 'dropped', 'planned') else 'entry-status'
+        status_html = f'<span class="entry-status {css}">{e["status"]}</span>'
     else:
         status_html = ''
     cards += f"""
