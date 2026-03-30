@@ -292,6 +292,26 @@ header {
 }
 .entry-body strong { color: #e8e3db; }
 
+/* ── search ── */
+.search-wrap {
+  margin-bottom: 1rem;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--accent); }
+
 /* ── filters ── */
 .filters {
   display: flex;
@@ -423,6 +443,8 @@ for cat in CATEGORIES:
             'date_fmt': format_date(meta.get('date', '')),
             'url': f'{cat}/{s}.html',
             'tag_class': tag_class,
+            'year': meta.get('year', ''),
+            'studio': meta.get('studio', ''),
         })
 
 # sort by date descending
@@ -443,7 +465,7 @@ for e in all_entries:
     t = e['type'].lower()
     st = e['status'].lower()
     cards += f"""
-<a href="{e['url']}" class="entry-card" data-type="{t}" data-status="{st}">
+<a href="{e['url']}" class="entry-card" data-type="{t}" data-status="{st}" data-title="{e['title'].lower()}" data-score="{e['score'].replace('/10','').strip()}" data-year="{e.get('year','')}" data-studio="{e.get('studio','').lower()}">
   <div>
     <div class="entry-title">{e['title']}</div>
     <div class="entry-meta">
@@ -457,6 +479,9 @@ for e in all_entries:
 
 index_body = f"""
 <div class="container">
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="search... (score:9, year:2019, studio:mappa)">
+  </div>
   <div class="filters">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="anime">Anime</button>
@@ -475,22 +500,57 @@ index_body = f"""
 <script>
 const btns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.entry-card');
+const searchInput = document.querySelector('.search-input');
+let activeFilter = 'all';
+
+function applyFilters() {{
+  const raw = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+
+  // parse search query
+  let titleQ = '', scoreQ = '', yearQ = '', studioQ = '';
+  if (raw) {{
+    const scoreM = raw.match(/score:([^ ]+)/);
+    const yearM  = raw.match(/year:([^ ]+)/);
+    const studioM = raw.match(/studio:([^ ]+)/);
+    if (scoreM)  scoreQ  = scoreM[1];
+    if (yearM)   yearQ   = yearM[1];
+    if (studioM) studioQ = studioM[1];
+    titleQ = raw.replace(/score:[^ ]+/g,'').replace(/year:[^ ]+/g,'').replace(/studio:[^ ]+/g,'').trim();
+  }}
+
+  cards.forEach(card => {{
+    const type   = card.dataset.type;
+    const status = card.dataset.status;
+    const title  = card.dataset.title  || '';
+    const score  = card.dataset.score  || '';
+    const year   = card.dataset.year   || '';
+    const studio = card.dataset.studio || '';
+
+    const filterOk = activeFilter === 'all' || type === activeFilter || status === activeFilter;
+    const titleOk  = !titleQ  || title.includes(titleQ);
+    const scoreOk  = !scoreQ  || score === scoreQ;
+    const yearOk   = !yearQ   || year === yearQ;
+    const studioOk = !studioQ || studio.includes(studioQ);
+
+    const show = filterOk && titleOk && scoreOk && yearOk && studioOk;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  }});
+
+  document.getElementById('count').textContent = visible;
+}}
+
 btns.forEach(btn => {{
   btn.addEventListener('click', () => {{
     btns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.filter;
-    let visible = 0;
-    cards.forEach(card => {{
-      const type = card.dataset.type;
-      const status = card.dataset.status;
-      const show = f === 'all' || type === f || status === f;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    }});
-    document.getElementById('count').textContent = visible;
+    activeFilter = btn.dataset.filter;
+    applyFilters();
   }});
 }});
+
+searchInput.addEventListener('input', applyFilters);
 </script>"""
 
 with open(f'{OUT}/index.html', 'w', encoding='utf-8') as f:
