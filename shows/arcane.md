@@ -4,7 +4,7 @@ date: 2026-02-15
 type: Show
 studio: Riot Games / Fortiche
 year: 2021
-score: 
+score: 10/10 
 status: Finished
 ---
 
