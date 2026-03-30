@@ -5,11 +5,11 @@ type: Anime / Film / Show
 studio: 
 year: 
 score: 
-status: Watching / Finished / Dropped
+status: Watching / Finished / Dropped / Planned
 ---
 
 ## Progress
-<!-- Anime: Episode 1 ✔ / Dizi: S01E07 / Film: silip at -->
+<!-- Anime: Episode 1 ✔ / Dizi: S01E07 / Film: sil burayı -->
 
 ## First Impression
 
