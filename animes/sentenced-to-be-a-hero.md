@@ -1,6 +1,6 @@
 ---
 title: Sentenced to Be a Hero 
-date: 2026-03-30
+date: 2026-03-31
 type: Anime
 studio: Studio Kai
 year: 2026
@@ -10,9 +10,12 @@ status: Watching
 
 ## Progress
 Episode 1 ✔
+Episode 2 ✔
+Episode 3 ✔
 
 ## First Impression
-BABA BU ANIMASYONLAR NE YA, VAHŞET. Animasyon kalitesi için bile izlenir sırf.  
+BABA BU ANIMASYONLAR NE YA, VAHŞET. Animasyon kalitesi için bile izlenir sırf.
+Şu anda 3. bölümdeyim, animasyonlar gerçekten güzel, hikayeye biraz yavaş girmeye başladı sanırım 2. sezonu hızlı getiricekler, sevdim bunu. Umarım uzun soluklu olur.
 
 ## After Finishing
 
