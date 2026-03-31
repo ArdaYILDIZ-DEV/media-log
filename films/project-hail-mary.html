@@ -284,6 +284,32 @@ header {
   margin: 0 0.2rem;
 }
 
+/* ── poster ── */
+.entry-header-with-poster {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 1.5rem;
+  align-items: start;
+}
+.entry-poster {
+  width: 140px;
+  aspect-ratio: 2/3;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface);
+}
+@media (max-width: 600px) {
+  .entry-header-with-poster {
+    grid-template-columns: 1fr;
+  }
+  .entry-poster {
+    width: 100px;
+    order: -1;
+  }
+}
+
 /* ── responsive ── */
 @media (max-width: 600px) {
   .entry-header h1 { font-size: 1.5rem; }
@@ -303,16 +329,16 @@ header {
 <div class="container">
   <a class="back-link" href="/media-log/index.html">← back</a>
   <div class="entry-header">
-    <h1>Project Hail Mary</h1>
-    <div class="entry-attrs">
-      <span><span class="key">type</span><span class="val"><span class="tag tag-film">Film</span></span></span>
-      <span><span class="key">year</span><span class="val">2026</span></span>
+  <h1>Project Hail Mary</h1>
+  <div class="entry-attrs">
+    <span><span class="key">type</span><span class="val"><span class="tag tag-film">Film</span></span></span>
+    <span><span class="key">year</span><span class="val">2026</span></span>
 <span><span class="key">studio</span><span class="val">Amazon MGM</span></span>
 <span><span class="key">status</span><span class="val">Planned</span></span>
 <span><span class="key">added</span><span class="val">30 Mar 2026</span></span>
 
-    </div>
   </div>
+</div>
   <hr class="divider">
   <div class="entry-body"><h2>First Impression</h2>
 <p>Romandan uyarlama olduğunu duydum, aynı yazar daha önceden The Martian(Marslı) filminin uyarlandığı romanı da yazmıştı. O yüzden açıkcası çok büyük şeyler bekliyorum bu filmden. Uzun zamandır uzayla alakalı güzel bir film bakmamıştım, umarım Marslı gibi güzel bir iş çıkarmışlardır, Sinemada izlemek isterdim ama sınav haftam, elimden gelen bir şey yok.</p>
