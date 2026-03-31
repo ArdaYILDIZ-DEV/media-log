@@ -11,7 +11,6 @@ try:
         API_KEY = f.read().strip()
 except FileNotFoundError:
     print("HATA: .tmdb_key dosyası bulunamadı.")
-    
     exit(1)
 
 CATEGORIES = {
@@ -34,14 +33,17 @@ def parse_frontmatter(text):
         body = m.group(2)
     return meta, body, m.group(1) if m else ''
 
-def tmdb_search(title, media_type):
+def tmdb_search(title, media_type, year=None):
     query = urllib.parse.quote(title)
-    url = f"https://api.themoviedb.org/3/search/{media_type}?api_key={API_KEY}&query={query}&language=en-US&page=1"
+    year_param = f"&year={year}" if year and media_type == 'movie' else (f"&first_air_date_year={year}" if year else "")
+    url = f"https://api.themoviedb.org/3/search/{media_type}?api_key={API_KEY}&query={query}&language=en-US&page=1{year_param}"
     try:
         with urllib.request.urlopen(url, timeout=10) as r:
             data = json.loads(r.read())
         results = data.get('results', [])
         if not results:
+            if year:
+                return tmdb_search(title, media_type, year=None)
             return None
         poster = results[0].get('poster_path')
         if poster:
@@ -94,8 +96,9 @@ for folder, media_type in CATEGORIES.items():
             print(f"  skip  {fname} (title yok)")
             continue
 
-        print(f"  search   {title} ({media_type})...", end=' ', flush=True)
-        url = tmdb_search(title, media_type)
+        year = meta.get('year', None)
+        print(f"  search   {title} ({media_type}, {year or '?'})...", end=' ', flush=True)
+        url = tmdb_search(title, media_type, year=year)
         if url:
             inject_poster(filepath, url)
             print(f"✓")
