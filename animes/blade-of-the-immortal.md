@@ -8,9 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (izlenecek)
-
 ## First Impression
 Ölmeyen bir samuray varmış, konusu falan güzelmiş bakacaz. (Kan şiddet vb öğeler de içeriyormuş)
 
@@ -24,3 +21,6 @@ Episode 1 ✔ (izlenecek)
 - Fantasy
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (izlenecek)

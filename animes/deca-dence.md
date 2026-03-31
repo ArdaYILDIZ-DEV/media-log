@@ -8,8 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (başlamadım daha)
 ## First Impression
 Yine görselliği için izleyeceğim ama sanki biraz hikayesi de var gibi, bakalım nasıl.
 
@@ -23,3 +21,6 @@ Yine görselliği için izleyeceğim ama sanki biraz hikayesi de var gibi, bakal
 - Sci-Fi
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (başlamadım daha)

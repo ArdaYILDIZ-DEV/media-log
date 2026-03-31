@@ -8,9 +8,6 @@ score:
 status: Dropped
 ---
 
-## Progress
-S01E07 / 10
-
 ## First Impression
 Başlangıçta güzel gelmişti izlemek istemiştim ama aşırı sıktı, eğlenceli gelmesi için karakterlerin gelişmesi gerektiğini biliyorum ama bu kadar mı sıkar be kardeşim. Devam edemedim 1. Sezonun 7. Bölümünde bırakıyorum.
 
@@ -22,4 +19,7 @@ Bitirmedim.
 - Action
 
 ## Favorite Scenes
+
+## Progress
+S01E07 / 10
 

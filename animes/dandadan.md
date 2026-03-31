@@ -8,20 +8,6 @@ score: 8/10
 status: Watching
 ---
 
-## Progress
-Episode 1 ✔
-Episode 2 ✔
-Episode 3 ✔
-Episode 4 ✔
-Episode 5 ✔
-Episode 6 ✔
-Episode 7 ✔
-Episode 8 ✔
-Episode 9 ✔
-Episode 10 ✔
-Episode 11 ✔
-Episode 12 ✔
-
 ## First Impression
 Çok değişik her şey uçuyor kaçıyor falan konusu da malum aşırı komik geldiği için başlamıştım. 
 
@@ -40,4 +26,18 @@ Episode 12 ✔
 ## Favorite Scenes
 Turbo Granny fightları.
 Okarun'un ilk dönüşümü.
+
+## Progress
+Episode 1 ✔
+Episode 2 ✔
+Episode 3 ✔
+Episode 4 ✔
+Episode 5 ✔
+Episode 6 ✔
+Episode 7 ✔
+Episode 8 ✔
+Episode 9 ✔
+Episode 10 ✔
+Episode 11 ✔
+Episode 12 ✔
 

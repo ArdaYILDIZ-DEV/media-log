@@ -8,8 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (bakacaz daha başlamadım)
 ## First Impression
 Gotik bir tarzı var, hafif karanlık fantezi türü gibi, çizimleri güzel. Manga uyarlaması.
 
@@ -24,3 +22,6 @@ Gotik bir tarzı var, hafif karanlık fantezi türü gibi, çizimleri güzel. Ma
 
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (bakacaz daha başlamadım)

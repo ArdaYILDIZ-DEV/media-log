@@ -8,9 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (daha başlamadım)
-
 ## First Impression
 Yine kendine özgü bir havası olan bir anime. Aldığım infolara göre son bölüme kadar temposunu canlı tutabilmiş.
 
@@ -26,3 +23,6 @@ Yine kendine özgü bir havası olan bir anime. Aldığım infolara göre son b�
 
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (daha başlamadım)

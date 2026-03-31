@@ -8,9 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (daha başlamadım)
-
 ## First Impression
 Değişik ve aşırı gölgeli bir çizim tarzı var, sırf bunu merak ettiğim ve aşırı aksiyonlu gibi gözüktüğü için başlayacağım. Bide Bannerda herkes deli gibi duruyo aq.
 
@@ -26,3 +23,6 @@ Değişik ve aşırı gölgeli bir çizim tarzı var, sırf bunu merak ettiğim 
 
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (daha başlamadım)

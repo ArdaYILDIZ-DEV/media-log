@@ -8,9 +8,6 @@ score:
 status: Planned
 ---
 
-## Progress
-Episode 1 ✔ (Daha izlemedim bakacaz.)
-
 ## First Impression
 Görsel kalite ve hikaye olarak çok güzel diyorlar. Savaş ve politika da var konuları arasında. Mecha tarzını asla ve asla sevmem ama umarım kendini beğendirebilir.
 
@@ -26,3 +23,6 @@ Görsel kalite ve hikaye olarak çok güzel diyorlar. Savaş ve politika da var 
 - Mecha
 
 ## Favorite Scenes
+
+## Progress
+Episode 1 ✔ (Daha izlemedim bakacaz.)

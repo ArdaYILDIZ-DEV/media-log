@@ -8,9 +8,6 @@ score: 9/10
 status: Finished
 ---
 
-## Progress
-Hepsi Bitti
-
 ## First Impression
 2 kere falan başlamaya çalışmıştım bu animeye, ilk bölüm biraz değişik başlıyor diye 2 kere de bırakmıştım. Cyberpunk 2077 ile alakalı olduğu için dikkatimi çekmişti.
 ## After Finishing
@@ -27,3 +24,6 @@ Hepsi Bitti
 David'in Sandevistanı ilk kullandığı sahne.
 Lucy'nin hayalinin söylendiği ay sahnesi.
 Final...
+
+## Progress
+Hepsi Bitti

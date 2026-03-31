@@ -8,9 +8,6 @@ score: 10/10
 status: Finished
 ---
 
-## Progress
-S02E09 / 18
-
 ## First Impression
 Normalde lol'ün dizisi diye girdim, görselliği hoş geldi diye başladım. Ama konu beni aldı götürdü. Bu çizim tarzında ilk defa bir şey izledim, gerçekten başka bir şey.
 
@@ -25,3 +22,6 @@ Normalde lol'ün dizisi diye girdim, görselliği hoş geldi diye başladım. Am
 - Vi ve Jinx'in köprü sahnesi.
 - Jayce'in Heimerdingeri kendi kurduğu şehri gösterdiği sahne. 
 - Silco ve Jinx'in baba-kız dinamiğinin yavaş yavaş kırıldığı sahneler
+
+## Progress
+S02E09 / 18
