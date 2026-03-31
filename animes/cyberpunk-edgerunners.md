@@ -6,6 +6,7 @@ studio: TRIGGER
 year: 2022 
 score: 9/10
 status: Finished
+poster: https://m.media-amazon.com/images/M/MV5BM2JkMzM2ZmYtNWU4MS00MjZhLWFhZWUtYWFjYTJkN2RhZDliXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

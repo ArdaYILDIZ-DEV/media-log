@@ -6,6 +6,7 @@ studio: TBS
 year: 2024
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BZjQ1YTBiOGEtYWIzYS00NDQyLTlhNjgtY2JjMjFmMTVhOGY4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

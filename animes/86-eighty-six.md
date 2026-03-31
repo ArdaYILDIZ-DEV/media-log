@@ -6,6 +6,7 @@ studio: A-1 Pictures
 year: 2021
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BOWNmY2IzOGItMmQyNy00ZTM0LThiNjItODM3YzdkYjRlNWU1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

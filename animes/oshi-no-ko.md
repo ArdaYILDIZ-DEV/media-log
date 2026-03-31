@@ -6,6 +6,7 @@ studio: Doga Kobo
 year: 2023
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BYzM3ZGJkN2YtOTQ5Ny00MzEyLTlkMzQtZDVhYzM3YWFlM2QwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

@@ -6,6 +6,7 @@ studio: Riot Games / Fortiche
 year: 2021
 score: 10/10 
 status: Finished
+poster: https://m.media-amazon.com/images/M/MV5BYjA2NzhlMDItNWRmZC00MzRjLWE3ZjAtZjBlZDAwOWY2ODdjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

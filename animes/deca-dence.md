@@ -6,6 +6,7 @@ studio: Nut
 year: 2020
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BYTI0NzQ3MjMtZDczMy00MDM1LWJiZTktNDMyOTgyNGE0NDkzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

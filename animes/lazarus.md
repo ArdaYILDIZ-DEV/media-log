@@ -6,6 +6,7 @@ studio: Sola Entertainment
 year: 2025
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BNTQ1NjU5ZDQtN2RjYi00ZmIwLWI0YWYtOTI3NmJjMjcxNzA2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

@@ -6,6 +6,7 @@ studio: Netflix
 year: 2019
 score: 
 status: Dropped
+poster: https://m.media-amazon.com/images/M/MV5BMzlmMmIxODItYzBjNC00YjMwLWIwOTAtNzVlMTBlNTNkMjZjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

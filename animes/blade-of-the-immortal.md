@@ -6,6 +6,7 @@ studio: Liden Films
 year: 2019
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BMTg5NTEwZDAtODk2Ni00MzY2LWFkMzgtNmUxZGY1NzhkYTIyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

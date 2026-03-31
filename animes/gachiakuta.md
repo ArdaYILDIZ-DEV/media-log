@@ -6,6 +6,7 @@ studio: BONES Film
 year: 2025 
 score: 
 status: Planned
+poster: https://m.media-amazon.com/images/M/MV5BZDU5ZmEzODYtMDU2OS00NTZiLTk4MWYtYWUyZWUzNGU2ODdjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression

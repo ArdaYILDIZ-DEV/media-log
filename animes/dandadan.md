@@ -6,6 +6,7 @@ studio: Science SARU
 year: 2024
 score: 8/10
 status: Watching
+poster: https://m.media-amazon.com/images/M/MV5BYWFhOWMxNTYtZThiMi00ZmQ5LTlmODktN2QwNzUyZjMyZGQzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## First Impression
