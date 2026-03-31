@@ -6,11 +6,8 @@ studio:
 year: 
 score: 
 status: Watching / Finished / Dropped / Planned
+poster: 
 ---
-
-## Progress
-<!-- Anime: Episode 1 ✔ / Dizi: S01E07 / Film: sil burayı -->
-
 ## First Impression
 
 
@@ -21,3 +18,7 @@ status: Watching / Finished / Dropped / Planned
 
 
 ## Favorite Scenes
+
+
+## Progress
+<!-- Anime: Episode 1 ✔ / Dizi: S01E07 / Film: sil burayı -->
