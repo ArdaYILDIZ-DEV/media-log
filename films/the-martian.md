@@ -9,9 +9,7 @@ status: Finished
 poster: https://image.tmdb.org/t/p/w500/vBq5qOxBKnhGZNcW36b2Qq6cLDG.jpg
 ---
 ## First Impression
-Ilk gördüğümde direkt benlik olduğunu anlamıştım.
-Merak duygusunu çok hızlı bir şekilde uyandırdı bende.
-Mizahı güzel gelmişti izlediğim klipte.
+Gördüğüm an tam benlik olduğunu anlamıştım. Merak duygusunu çok hızlı uyandırıyor. İzlediğim kliplerdeki mizahı ve havası da çok sarmıştı.
 
 ## After Finishing
 Interstellar gibi dramatik bir şekilde bitmiyor, manzaralar ve görsellik çok güzeldi.
