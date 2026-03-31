@@ -349,6 +349,32 @@ header {
   margin: 0 0.2rem;
 }
 
+/* ── poster ── */
+.entry-header-with-poster {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 1.5rem;
+  align-items: start;
+}
+.entry-poster {
+  width: 140px;
+  aspect-ratio: 2/3;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface);
+}
+@media (max-width: 600px) {
+  .entry-header-with-poster {
+    grid-template-columns: 1fr;
+  }
+  .entry-poster {
+    width: 100px;
+    order: -1;
+  }
+}
+
 /* ── responsive ── */
 @media (max-width: 600px) {
   .entry-header h1 { font-size: 1.5rem; }
@@ -415,9 +441,9 @@ for cat in CATEGORIES:
                 display = format_date(val) if key == 'date' else val
                 attrs_html += f'<span><span class="key">{label}</span><span class="val">{display}</span></span>\n'
 
-        content = f"""
-<div class="container">
-  <a class="back-link" href="/media-log/index.html">← back</a>
+        poster = meta.get('poster', '')
+        if poster:
+            header_html = f'''<div class="entry-header-with-poster">
   <div class="entry-header">
     <h1>{meta.get('title', s)}</h1>
     <div class="entry-attrs">
@@ -425,6 +451,20 @@ for cat in CATEGORIES:
       {attrs_html}
     </div>
   </div>
+  <div class="entry-poster" style="background-image:url('{poster}')"></div>
+</div>'''
+        else:
+            header_html = f'''<div class="entry-header">
+  <h1>{meta.get('title', s)}</h1>
+  <div class="entry-attrs">
+    <span><span class="key">type</span><span class="val"><span class="tag {tag_class}">{entry_type}</span></span></span>
+    {attrs_html}
+  </div>
+</div>'''
+        content = f"""
+<div class="container">
+  <a class="back-link" href="/media-log/index.html">← back</a>
+  {header_html}
   <hr class="divider">
   <div class="entry-body">{md_to_html(body)}</div>
 </div>"""

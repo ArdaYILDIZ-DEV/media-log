@@ -6,6 +6,7 @@ studio: Studio Kai
 year: 2026
 score: 10/10
 status: Watching
+poster: https://m.media-amazon.com/images/M/MV5BM2NlNmRlODQtMmNhOS00MDM5LTgwNzEtNzc3M2ZjYzZjNzRkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg
 ---
 
 ## Progress
