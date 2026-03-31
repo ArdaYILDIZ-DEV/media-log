@@ -6,7 +6,7 @@ studio: 20th Century Fox
 year: 2015
 score: 9/10
 status: Finished
-poster: https://image.tmdb.org/t/p/w500/vBq5qOxBKnhGZNcW36b2Qq6cLDG.jpg
+poster: https://image.tmdb.org/t/p/w500/fASz8A0yFE3QB6LgGoOfwvFSseV.jpg
 ---
 ## First Impression
 Gördüğüm an tam benlik olduğunu anlamıştım. Merak duygusunu çok hızlı uyandırıyor. İzlediğim kliplerdeki mizahı ve havası da çok sarmıştı.
