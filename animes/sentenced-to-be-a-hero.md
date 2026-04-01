@@ -1,6 +1,6 @@
 ---
 title: Sentenced to Be a Hero 
-date: 2026-03-31
+date: 2026-04-01
 type: Anime
 studio: Studio Kai
 year: 2026
@@ -30,4 +30,5 @@ Tüm patlama ve saldırı sahneleri tam bir şaheser.
 Episode 1 ✔
 Episode 2 ✔
 Episode 3 ✔
+Episode 4 ✔
 
