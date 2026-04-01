@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cowboy Bebop</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0e0e0e;
+  --surface: #161616;
+  --border:  #2a2a2a;
+  --text:    #d4cfc8;
+  --muted:   #6b6560;
+  --accent:  #c8a97e;
+  --anime:   #7eb8c8;
+  --film:    #c87e9a;
+  --show:    #9ac87e;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── header ── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0 1.5rem;
+  margin-bottom: 3rem;
+}
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.site-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.site-subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── main container ── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+/* ── index: cards ── */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.entry-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.1rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  align-items: start;
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+.entry-card:hover {
+  border-color: var(--accent);
+  background: #1a1a1a;
+}
+.entry-card:first-child { border-radius: 4px 4px 0 0; }
+.entry-card:last-child  { border-radius: 0 0 4px 4px; }
+.entry-card:only-child  { border-radius: 4px; }
+
+.entry-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+.entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 2px;
+}
+.tag-anime  { background: #7eb8c812; color: var(--anime);  border: 1px solid #7eb8c830; }
+.tag-film   { background: #c87e9a12; color: var(--film);   border: 1px solid #c87e9a30; }
+.tag-show   { background: #9ac87e12; color: var(--show);   border: 1px solid #9ac87e30; }
+
+.entry-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+.entry-status {
+  font-size: 0.82rem;
+  font-style: italic;
+}
+.status-watching  { color: #a78ee6; }
+.status-finished  { color: #7ec89a; }
+.status-dropped   { color: #c87e7e; }
+.status-planned   { color: var(--muted); }
+.entry-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── entry page ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent); }
+
+.entry-header { margin-bottom: 2rem; }
+.entry-header h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  color: #e8e3db;
+}
+.entry-attrs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.entry-attrs span { display: flex; gap: 0.35rem; }
+.entry-attrs .key { color: var(--muted); }
+.entry-attrs .val { color: var(--text); }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ── markdown body ── */
+.entry-body h2 {
+  font-size: 0.72rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2rem 0 0.75rem;
+}
+.entry-body h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 1.25rem 0 0.4rem;
+  color: var(--text);
+}
+.entry-body p {
+  margin-bottom: 0.75rem;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+.entry-body ul {
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.entry-body li {
+  color: var(--text);
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+}
+.entry-body code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85em;
+  background: #1f1f1f;
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+  color: var(--accent);
+}
+.entry-body strong { color: #e8e3db; }
+
+/* ── search ── */
+.search-wrap {
+  margin-bottom: 1rem;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--accent); }
+
+/* ── filters ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.filter-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #c8a97e10;
+}
+.filter-divider {
+  width: 1px;
+  height: 1rem;
+  background: var(--border);
+  margin: 0 0.2rem;
+}
+
+/* ── poster ── */
+.entry-header-with-poster {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 1.5rem;
+  align-items: start;
+}
+.entry-poster {
+  width: 140px;
+  aspect-ratio: 2/3;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface);
+}
+@media (max-width: 600px) {
+  .entry-header-with-poster {
+    grid-template-columns: 1fr;
+  }
+  .entry-poster {
+    width: 100px;
+    order: -1;
+  }
+}
+
+/* ── responsive ── */
+@media (max-width: 600px) {
+  .entry-header h1 { font-size: 1.5rem; }
+  .entry-card { grid-template-columns: 1fr; }
+  .entry-date { text-align: left; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="/media-log/index.html">media-log</a>
+    <span class="site-subtitle">film, anime, dizi notları</span>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="/media-log/index.html">← back</a>
+  <div class="entry-header-with-poster">
+  <div class="entry-header">
+    <h1>Cowboy Bebop</h1>
+    <div class="entry-attrs">
+      <span><span class="key">type</span><span class="val"><span class="tag tag-anime">Anime</span></span></span>
+      <span><span class="key">year</span><span class="val">1998</span></span>
+<span><span class="key">studio</span><span class="val">Sunrise</span></span>
+<span><span class="key">status</span><span class="val">Planned</span></span>
+<span><span class="key">added</span><span class="val">01 Apr 2026</span></span>
+
+    </div>
+  </div>
+  <div class="entry-poster" style="background-image:url('https://image.tmdb.org/t/p/w500/xDiXDfZwC6XYC6fxHI1jl3A3Ill.jpg')"></div>
+</div>
+  <hr class="divider">
+  <div class="entry-body"><h2>First Impression</h2>
+<p>Kendi bilgisayarımı bu animeyi izlemek için yoruyorum, internette 48 gb bir versiyonunu buldum ve kendim onu encode ediyorum, açıkcası umarım izlemeye değer, aşırı fazla övüyorlardı. Beklentim var çünkü hem uzay macerası tarzı hem neo noir. </p>
+
+<h2>After Finishing</h2>
+
+
+<h2>Themes</h2>
+<ul>
+<li>Space</li>
+<li>Animation</li>
+<li>Cyberpunk</li>
+<li>Action</li>
+<li>Adventure</li>
+<li>Sci-Fi</li>
+<li>Comedy</li>
+<li>Neo-Noir</li>
+</ul>
+
+<h2>Favorite Scenes</h2>
+
+
+<h2>Progress</h2>
+<p>Episode 1 ✔ (daha başlamadım)</p>
+</div>
+</div>
+</body>
+</html>
