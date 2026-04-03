@@ -8,6 +8,7 @@ score:
 status: Watching / Finished / Dropped / Planned
 poster: 
 ---
+
 ## First Impression
 
 
