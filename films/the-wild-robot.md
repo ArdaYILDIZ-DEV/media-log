@@ -4,8 +4,8 @@ date: 2026-04-08
 type: Film
 studio: DreamWorks Animation
 year: 2024
-score:
-status: Planned
+score: 8/10
+status: Finished
 poster: https://image.tmdb.org/t/p/w500/eG9lz41mJqsI4J6ubMtVqD26q2J.jpg
 ---
 ## First Impression
