@@ -6,9 +6,8 @@ studio: Madhouse
 year: 2006
 score: 
 status: Planned
-poster: 
+poster: https://image.tmdb.org/t/p/w500/xHnlWM8BmqY419YUccYy2KC5Jqo.jpg
 ---
-
 ## First Impression
 Hazır yaz geliyor, rahat izleyecek bir şey olsun diye koydum. Zaman yolculuğu falan varmış ama bir liseli kullanıyor :D Keyiflidir umarım.
 
