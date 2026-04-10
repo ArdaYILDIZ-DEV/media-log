@@ -209,7 +209,7 @@ header {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1px;
+  gap: 8px;
 }
 
 .poster-card {
@@ -224,8 +224,9 @@ header {
 }
 .poster-card:hover {
   border-color: var(--accent);
-  transform: translateY(-2px);
-  z-index: 2;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 10;
 }
 .poster-card:hover .date-badge {
   opacity: 1;
@@ -273,9 +274,10 @@ header {
   z-index: 1;
 }
 .poster-title {
-  font-size: 0.88rem;
+  font-size: 0.91rem;
   font-weight: 500;
   color: #e8e3db;
+  letter-spacing: 0.2px;
   line-height: 1.25;
   margin-bottom: 0.3rem;
   display: -webkit-box;
@@ -306,6 +308,13 @@ header {
   font-family: 'DM Mono', monospace;
   font-size: 0.65rem;
   color: var(--accent);
+}
+
+.entry-score::before {
+  content: "★";
+  margin-right: 4px;
+  color: var(--accent);
+  font-size: 0.93rem;
 }
 
 .status-dot {
