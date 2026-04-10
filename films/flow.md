@@ -6,11 +6,11 @@ studio: Dream Well Studio
 year: 2024
 score:
 status: Planned
-poster: https://image.tmdb.org/t/p/w500/ggFrFg3l2FPOIkwgsXZDzEQ5nrg.jpg
+poster: https://image.tmdb.org/t/p/w500/zME0Ul0w48MKkYBnFRn40M5qgLh.jpg
 ---
 
 ## First Impression
-Filmde diyalog yok. Olaylar silsilesi bir kedinin etrafında dönüyor. Duyguları ve olayların ağırlığını diyalogsuz bir şekilde bile çok iyi verdiğini söylemişler yorum olarak. Listemdeki tek diyalogsuz film.
+Filmde diyalog yok. Olaylar silsilesi bir kedinin etrafında dönüyor. Duyguları ve olayların ağırlığını diyalogsuz bir şekilde bile çok iyi verdiğini söylemişler yorum olarak. Anlatımı sade ama etkili bir şekilde kurulmuş. Listemdeki tek diyalogsuz film.
 
 ## After Finishing
 
