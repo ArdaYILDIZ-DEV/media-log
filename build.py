@@ -314,19 +314,61 @@ header {
   content: "★";
   margin-right: 4px;
   color: var(--accent);
-  font-size: 0.93rem;
+  font-size: 0.95rem;
 }
 
 .status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
   flex-shrink: 0;
+  position: relative;
+  transition: transform 0.2s ease;
 }
-.dot-watching { background: #a78ee6; }
-.dot-finished { background: #7ec89a; }
-.dot-dropped  { background: #c87e7e; }
-.dot-planned  { background: var(--muted); }
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(4px);
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.dot-watching {
+  background: #a78ee6;
+  box-shadow: 0 0 10px rgba(167, 142, 230, 0.3);
+  animation: pulse-dot 2s infinite;
+}
+
+.dot-finished {
+  background: #7ec89a;
+  box-shadow: 0 0 8px rgba(126, 200, 154, 0.2);
+}
+
+.dot-dropped {
+  background: #c87e7e;
+  opacity: 0.8;
+}
+
+.dot-planned {
+  background: transparent;
+  border: 1.5px solid var(--muted);
+  box-sizing: border-box;
+  opacity: 0.6;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.status-dot:hover {
+  transform: scale(1.2);
+}
 
 .date-badge {
   position: absolute;
