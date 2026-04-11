@@ -20,10 +20,13 @@ def parse_frontmatter(text):
     return meta, body
 
 def md_to_html(text):
-    """Minimal markdown → HTML (headings, lists, paragraphs, inline)."""
+    """Markdown → HTML with extended support."""
     lines = text.split('\n')
     html = []
     in_ul = False
+    in_ol = False
+    in_blockquote = False
+    ol_counter = 0
 
     def close_ul():
         nonlocal in_ul
@@ -31,31 +34,129 @@ def md_to_html(text):
             html.append('</ul>')
             in_ul = False
 
+    def close_ol():
+        nonlocal in_ol, ol_counter
+        if in_ol:
+            html.append('</ol>')
+            in_ol = False
+            ol_counter = 0
+
+    def close_blockquote():
+        nonlocal in_blockquote
+        if in_blockquote:
+            html.append('</blockquote>')
+            in_blockquote = False
+
+    def close_all():
+        close_ul()
+        close_ol()
+        close_blockquote()
+
     def inline(s):
+        # links
+        s = re.sub(r'\[(.+?)\]\((https?://[^\)]+)\)', r'<a href="\2" target="_blank" rel="noopener">\1</a>', s)
+        # bold+italic
+        s = re.sub(r'\*\*\*(.+?)\*\*\*', r'<strong><em>\1</em></strong>', s)
+        # bold
         s = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', s)
-        s = re.sub(r'\*(.+?)\*',     r'<em>\1</em>', s)
-        s = re.sub(r'`(.+?)`',       r'<code>\1</code>', s)
+        # italic
+        s = re.sub(r'\*(.+?)\*', r'<em>\1</em>', s)
+        # strikethrough
+        s = re.sub(r'~~(.+?)~~', r'<del>\1</del>', s)
+        # inline code
+        s = re.sub(r'`(.+?)`', r'<code>\1</code>', s)
         return s
 
-    for line in lines:
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+
+        # horizontal rule
+        if re.match(r'^[-*_]{3,}\s*$', line):
+            close_all()
+            html.append('<hr class="md-hr">')
+            i += 1
+            continue
+
+        # headings
         if re.match(r'^#{1,6}\s', line):
-            close_ul()
+            close_all()
             level = len(re.match(r'^(#+)', line).group(1))
             content = inline(line.lstrip('#').strip())
             html.append(f'<h{level}>{content}</h{level}>')
-        elif line.startswith('- ') or line.startswith('* '):
+            i += 1
+            continue
+
+        # blockquote
+        if line.startswith('> '):
+            close_ul()
+            close_ol()
+            if not in_blockquote:
+                html.append('<blockquote>')
+                in_blockquote = True
+            html.append(f'<p>{inline(line[2:])}</p>')
+            i += 1
+            continue
+        elif in_blockquote and line.strip() == '':
+            close_blockquote()
+            i += 1
+            continue
+
+        # unordered list
+        if re.match(r'^[-*+] ', line):
+            close_ol()
+            close_blockquote()
             if not in_ul:
                 html.append('<ul>')
                 in_ul = True
-            html.append(f'<li>{inline(line[2:])}</li>')
-        elif line.strip() == '':
-            close_ul()
-            html.append('')
-        else:
-            close_ul()
-            html.append(f'<p>{inline(line)}</p>')
+            # nested check
+            content = line[2:]
+            html.append(f'<li>{inline(content)}</li>')
+            i += 1
+            continue
 
-    close_ul()
+        # ordered list
+        if re.match(r'^\d+\. ', line):
+            close_ul()
+            close_blockquote()
+            if not in_ol:
+                html.append('<ol>')
+                in_ol = True
+            content = re.sub(r'^\d+\. ', '', line)
+            html.append(f'<li>{inline(content)}</li>')
+            i += 1
+            continue
+
+        # fenced code block
+        if line.startswith('```'):
+            close_all()
+            lang = line[3:].strip()
+            lang_class = f' class="language-{lang}"' if lang else ''
+            code_lines = []
+            i += 1
+            while i < len(lines) and not lines[i].startswith('```'):
+                code_lines.append(lines[i])
+                i += 1
+            code = '\n'.join(code_lines)
+            # escape HTML inside code blocks
+            code = code.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+            html.append(f'<pre><code{lang_class}>{code}</code></pre>')
+            i += 1
+            continue
+
+        # blank line
+        if line.strip() == '':
+            close_all()
+            html.append('')
+            i += 1
+            continue
+
+        # paragraph
+        close_all()
+        html.append(f'<p>{inline(line)}</p>')
+        i += 1
+
+    close_all()
     return '\n'.join(html)
 
 def slug(filename):
@@ -92,7 +193,7 @@ CSS = """
   --show:    #9ac87e;
 }
 
-html { font-size: 16px; }
+html { font-size: 16px; zoom: 1.2; }
 
 body {
   font-family: 'EB Garamond', Georgia, serif;
@@ -241,11 +342,20 @@ header {
   background-color: #1a1a1a;
   position: relative;
 }
+
+/* ── improved gradient overlay for readability ── */
 .poster-img::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(14,14,14,0.95) 0%, rgba(14,14,14,0.35) 45%, transparent 70%);
+  background: linear-gradient(
+    to top,
+    rgba(10,10,10,1)    0%,
+    rgba(10,10,10,0.88) 28%,
+    rgba(10,10,10,0.4)  52%,
+    rgba(10,10,10,0.08) 72%,
+    transparent         100%
+  );
 }
 
 .no-poster-img {
@@ -264,27 +374,39 @@ header {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(22,22,22,0.98) 0%, rgba(22,22,22,0.4) 45%, transparent 70%);
+  background: linear-gradient(
+    to top,
+    rgba(22,22,22,1)    0%,
+    rgba(22,22,22,0.9)  28%,
+    rgba(22,22,22,0.45) 52%,
+    transparent         75%
+  );
 }
 
 .poster-overlay {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 0.6rem 0.65rem;
+  padding: 0.75rem 0.7rem 0.65rem;
   z-index: 1;
 }
+
+/* ── improved poster title typography ── */
 .poster-title {
-  font-size: 0.91rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: #e8e3db;
-  letter-spacing: 0.2px;
+  color: #f0ece5;
+  letter-spacing: 0.15px;
   line-height: 1.25;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,0.9),
+    0 2px 8px rgba(0,0,0,0.7);
 }
+
 .poster-meta {
   display: flex;
   align-items: center;
@@ -300,9 +422,9 @@ header {
   padding: 0.1rem 0.35rem;
   border-radius: 2px;
 }
-.tag-anime { background: rgba(126,184,200,0.12); color: var(--anime); border: 1px solid rgba(126,184,200,0.25); }
-.tag-film  { background: rgba(200,126,154,0.12); color: var(--film);  border: 1px solid rgba(200,126,154,0.25); }
-.tag-show  { background: rgba(154,200,126,0.12); color: var(--show);  border: 1px solid rgba(154,200,126,0.25); }
+.tag-anime { background: rgba(126,184,200,0.15); color: var(--anime); border: 1px solid rgba(126,184,200,0.3); }
+.tag-film  { background: rgba(200,126,154,0.15); color: var(--film);  border: 1px solid rgba(200,126,154,0.3); }
+.tag-show  { background: rgba(154,200,126,0.15); color: var(--show);  border: 1px solid rgba(154,200,126,0.3); }
 
 .entry-score {
   font-family: 'DM Mono', monospace;
@@ -387,6 +509,44 @@ header {
   letter-spacing: 0.03em;
 }
 
+/* ── infinite scroll loader ── */
+.load-sentinel {
+  height: 1px;
+  margin-top: 2rem;
+}
+
+.load-spinner {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  gap: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.load-spinner.visible { display: flex; }
+
+.spinner-dots {
+  display: flex;
+  gap: 4px;
+}
+.spinner-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: dot-bounce 1.2s infinite ease-in-out;
+}
+.spinner-dots span:nth-child(2) { animation-delay: 0.2s; }
+.spinner-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
 /* ── entry page ── */
 .back-link {
   display: inline-flex;
@@ -438,25 +598,32 @@ header {
   margin: 2rem 0 0.75rem;
 }
 .entry-body h3 {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1.5rem 0 0.5rem;
+  color: #e0dbd3;
+}
+.entry-body h4 {
+  font-size: 0.95rem;
   font-weight: 500;
   margin: 1.25rem 0 0.4rem;
   color: var(--text);
 }
 .entry-body p {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
   color: var(--text);
   font-size: 1.05rem;
 }
-.entry-body ul {
-  padding-left: 1.25rem;
-  margin-bottom: 0.75rem;
+.entry-body ul, .entry-body ol {
+  padding-left: 1.4rem;
+  margin-bottom: 0.85rem;
 }
 .entry-body li {
   color: var(--text);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
   font-size: 1.05rem;
 }
+.entry-body ol { list-style-type: decimal; }
 .entry-body code {
   font-family: 'DM Mono', monospace;
   font-size: 0.85em;
@@ -464,6 +631,48 @@ header {
   padding: 0.1em 0.35em;
   border-radius: 2px;
   color: var(--accent);
+}
+.entry-body pre {
+  background: #141414;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.entry-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+  color: #c8c0b4;
+  border-radius: 0;
+}
+.entry-body blockquote {
+  border-left: 2px solid var(--accent);
+  margin: 1.25rem 0;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+}
+.entry-body blockquote p {
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.3rem;
+}
+.entry-body .md-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+.entry-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.15s;
+}
+.entry-body a:hover { opacity: 0.75; }
+.entry-body del {
+  color: var(--muted);
+  text-decoration-color: var(--muted);
 }
 .entry-body strong { color: #e8e3db; }
 
@@ -635,6 +844,9 @@ for e in all_entries:
   {overlay}
 </a>'''
 
+# Page size for infinite scroll
+PAGE_SIZE = 24
+
 index_body = f"""
 <div class="container">
   <div class="search-wrap">
@@ -652,17 +864,31 @@ index_body = f"""
     <button class="filter-btn" data-filter="planned">Planned</button>
   </div>
   <div class="section-label">recent entries — <span id="count">{len(all_entries)}</span> total</div>
-  <div class="grid">{cards}
+  <div class="grid" id="grid">{cards}
   </div>
+  <div class="load-spinner" id="spinner">
+    <div class="spinner-dots"><span></span><span></span><span></span></div>
+  </div>
+  <div class="load-sentinel" id="sentinel"></div>
 </div>
 <script>
-const btns  = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.poster-card');
+const btns        = document.querySelectorAll('.filter-btn');
+const allCards    = Array.from(document.querySelectorAll('.poster-card'));
 const searchInput = document.querySelector('.search-input');
-let activeFilter = 'all';
+const grid        = document.getElementById('grid');
+const spinner     = document.getElementById('spinner');
+const sentinel    = document.getElementById('sentinel');
+const PAGE_SIZE   = {PAGE_SIZE};
 
-function applyFilters() {{
-  const raw = searchInput.value.trim().toLowerCase();
+let activeFilter  = 'all';
+let visibleCards  = [];   // filtered set
+let renderedCount = 0;    // how many are currently shown
+
+/* ── hide all cards initially — JS controls visibility ── */
+allCards.forEach(c => c.style.display = 'none');
+
+function getFilteredCards() {{
+  const raw    = searchInput.value.trim().toLowerCase();
   let titleQ = '', scoreQ = '', yearQ = '', studioQ = '';
   if (raw) {{
     const scoreM  = raw.match(/score:([^ ]+)/);
@@ -674,8 +900,7 @@ function applyFilters() {{
     titleQ = raw.replace(/score:[^ ]+/g,'').replace(/year:[^ ]+/g,'').replace(/studio:[^ ]+/g,'').trim();
   }}
 
-  let visible = 0;
-  cards.forEach(card => {{
+  return allCards.filter(card => {{
     const type   = card.dataset.type;
     const status = card.dataset.status;
     const title  = card.dataset.title  || '';
@@ -689,14 +914,47 @@ function applyFilters() {{
     const yearOk   = !yearQ   || year === yearQ;
     const studioOk = !studioQ || studio.includes(studioQ);
 
-    const show = filterOk && titleOk && scoreOk && yearOk && studioOk;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
+    return filterOk && titleOk && scoreOk && yearOk && studioOk;
   }});
-
-  document.getElementById('count').textContent = visible;
 }}
 
+function applyFilters() {{
+  /* hide everything first */
+  allCards.forEach(c => c.style.display = 'none');
+
+  visibleCards  = getFilteredCards();
+  renderedCount = 0;
+
+  document.getElementById('count').textContent = visibleCards.length;
+  renderNextPage();
+}}
+
+function renderNextPage() {{
+  const batch = visibleCards.slice(renderedCount, renderedCount + PAGE_SIZE);
+  batch.forEach(c => c.style.display = '');
+  renderedCount += batch.length;
+
+  /* hide spinner once all cards are shown */
+  if (renderedCount >= visibleCards.length) {{
+    spinner.classList.remove('visible');
+  }}
+}}
+
+/* ── IntersectionObserver for infinite scroll ── */
+const observer = new IntersectionObserver(entries => {{
+  if (!entries[0].isIntersecting) return;
+  if (renderedCount >= visibleCards.length) return;
+
+  spinner.classList.add('visible');
+  /* small delay so the spinner is perceptible */
+  setTimeout(() => {{
+    renderNextPage();
+  }}, 280);
+}}, {{ rootMargin: '200px' }});
+
+observer.observe(sentinel);
+
+/* ── filter buttons ── */
 btns.forEach(btn => {{
   btn.addEventListener('click', () => {{
     btns.forEach(b => b.classList.remove('active'));
@@ -706,7 +964,15 @@ btns.forEach(btn => {{
   }});
 }});
 
-searchInput.addEventListener('input', applyFilters);
+/* ── search ── */
+let searchTimer;
+searchInput.addEventListener('input', () => {{
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyFilters, 120);
+}});
+
+/* ── initial render ── */
+applyFilters();
 </script>"""
 
 with open(f'{OUT}/index.html', 'w', encoding='utf-8') as f:
