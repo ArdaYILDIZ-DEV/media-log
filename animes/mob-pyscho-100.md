@@ -6,9 +6,8 @@ studio: Bones
 year: 2016
 score: 
 status: Planned
-poster: 
+poster: https://image.tmdb.org/t/p/w500/vR7hwaGQ0ySRoq1WobiNRaPs4WO.jpg
 ---
-
 ## First Impression
 Görsel tarzı çok mistik olm, animasyon tarzı da keza, garanti izlerim. Hikayesi sıcak geldi.
 
