@@ -1,11 +1,11 @@
 ---
 title: Terror in Resonance
-date: 2026-04-03
+date: 2026-05-02
 type: Anime
 studio: MAPPA
 year: 2014
 score: 
-status: Planned
+status: Watching
 poster: https://image.tmdb.org/t/p/w500/wc1PaImHVXIESClpEDwNI1mlYuC.jpg
 ---
 ## First Impression
@@ -15,7 +15,7 @@ Cowboy Bebop'un yönetmeni varmış. Kısa olduğunu ve hiç filler bölüm olma
 
 
 ## Themes
-d- Animation
+- Animation
 - Mystery
 - Dram
 - Crime
@@ -24,4 +24,14 @@ d- Animation
 
 
 ## Progress
-Episode 1 ✔ (daha başlamadım)
+Episode 1 ✔
+Episode 2 ✔
+Episode 3 ✔
+Episode 4 ✔
+Episode 5 ✔
+Episode 6 X
+Episode 7 X
+Episode 8 X
+Episode 9 X
+Episode 10 X
+Episode 11 X
