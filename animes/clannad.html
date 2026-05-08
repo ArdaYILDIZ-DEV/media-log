@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clannad</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0e0e0e;
+  --surface: #161616;
+  --border:  #2a2a2a;
+  --text:    #d4cfc8;
+  --muted:   #6b6560;
+  --accent:  #c8a97e;
+  --anime:   #7eb8c8;
+  --film:    #c87e9a;
+  --show:    #9ac87e;
+}
+
+html { font-size: 16px; zoom: 1.2; }
+
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── header ── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0 1.5rem;
+  margin-bottom: 3rem;
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.site-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.site-subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── main container ── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+/* ── search ── */
+.search-wrap {
+  margin-bottom: 1rem;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--accent); }
+
+/* ── filters ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.filter-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #c8a97e10;
+}
+.filter-divider {
+  width: 1px;
+  height: 1rem;
+  background: var(--border);
+  margin: 0 0.2rem;
+}
+
+/* ── section label ── */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+/* ── poster grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.poster-card {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s, transform 0.15s;
+  display: block;
+}
+.poster-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  z-index: 10;
+}
+.poster-card:hover .date-badge {
+  opacity: 1;
+}
+
+.poster-img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  display: block;
+  background-size: cover;
+  background-position: center top;
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+/* ── improved gradient overlay for readability ── */
+.poster-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10,10,10,1)    0%,
+    rgba(10,10,10,0.88) 28%,
+    rgba(10,10,10,0.4)  52%,
+    rgba(10,10,10,0.08) 72%,
+    transparent         100%
+  );
+}
+
+.no-poster-img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 2rem;
+  color: var(--border);
+  position: relative;
+}
+.no-poster-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(22,22,22,1)    0%,
+    rgba(22,22,22,0.9)  28%,
+    rgba(22,22,22,0.45) 52%,
+    transparent         75%
+  );
+}
+
+.poster-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0.75rem 0.7rem 0.65rem;
+  z-index: 1;
+}
+
+/* ── improved poster title typography ── */
+.poster-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #f0ece5;
+  letter-spacing: 0.15px;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow:
+    0 1px 3px rgba(0,0,0,0.9),
+    0 2px 8px rgba(0,0,0,0.7);
+}
+
+.poster-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 2px;
+}
+.tag-anime { background: rgba(126,184,200,0.15); color: var(--anime); border: 1px solid rgba(126,184,200,0.3); }
+.tag-film  { background: rgba(200,126,154,0.15); color: var(--film);  border: 1px solid rgba(200,126,154,0.3); }
+.tag-show  { background: rgba(154,200,126,0.15); color: var(--show);  border: 1px solid rgba(154,200,126,0.3); }
+
+.entry-score {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+}
+
+.entry-score::before {
+  content: "★";
+  margin-right: 4px;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(4px);
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.dot-watching {
+  background: #a78ee6;
+  box-shadow: 0 0 10px rgba(167, 142, 230, 0.3);
+  animation: pulse-dot 2s infinite;
+}
+
+.dot-finished {
+  background: #7ec89a;
+  box-shadow: 0 0 8px rgba(126, 200, 154, 0.2);
+}
+
+.dot-dropped {
+  background: #c87e7e;
+  opacity: 0.8;
+}
+
+.dot-planned {
+  background: transparent;
+  border: 1.5px solid var(--muted);
+  box-sizing: border-box;
+  opacity: 0.6;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.status-dot:hover {
+  transform: scale(1.2);
+}
+
+.date-badge {
+  position: absolute;
+  top: 0.5rem; right: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  background: rgba(14,14,14,0.82);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+/* ── infinite scroll loader ── */
+.load-sentinel {
+  height: 1px;
+  margin-top: 2rem;
+}
+
+.load-spinner {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  gap: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.load-spinner.visible { display: flex; }
+
+.spinner-dots {
+  display: flex;
+  gap: 4px;
+}
+.spinner-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: dot-bounce 1.2s infinite ease-in-out;
+}
+.spinner-dots span:nth-child(2) { animation-delay: 0.2s; }
+.spinner-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ── entry page ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent); }
+
+.entry-header { margin-bottom: 2rem; }
+.entry-header h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  color: #e8e3db;
+}
+.entry-attrs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.entry-attrs span { display: flex; gap: 0.35rem; }
+.entry-attrs .key { color: var(--muted); }
+.entry-attrs .val { color: var(--text); }
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ── markdown body ── */
+.entry-body h2 {
+  font-size: 0.72rem;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2rem 0 0.75rem;
+}
+.entry-body h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1.5rem 0 0.5rem;
+  color: #e0dbd3;
+}
+.entry-body h4 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 1.25rem 0 0.4rem;
+  color: var(--text);
+}
+.entry-body p {
+  margin-bottom: 0.85rem;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+.entry-body ul, .entry-body ol {
+  padding-left: 1.4rem;
+  margin-bottom: 0.85rem;
+}
+.entry-body li {
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+}
+.entry-body ol { list-style-type: decimal; }
+.entry-body code {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85em;
+  background: #1f1f1f;
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+  color: var(--accent);
+}
+.entry-body pre {
+  background: #141414;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.entry-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.82rem;
+  color: #c8c0b4;
+  border-radius: 0;
+}
+.entry-body blockquote {
+  border-left: 2px solid var(--accent);
+  margin: 1.25rem 0;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+}
+.entry-body blockquote p {
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.3rem;
+}
+.entry-body .md-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+.entry-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.15s;
+}
+.entry-body a:hover { opacity: 0.75; }
+.entry-body del {
+  color: var(--muted);
+  text-decoration-color: var(--muted);
+}
+.entry-body strong { color: #e8e3db; }
+
+/* ── poster (entry page) ── */
+.entry-header-with-poster {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 1.5rem;
+  align-items: start;
+}
+.entry-poster {
+  width: 140px;
+  aspect-ratio: 2/3;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface);
+}
+
+/* ── responsive ── */
+@media (max-width: 600px) {
+  .entry-header h1 { font-size: 1.5rem; }
+  .entry-header-with-poster { grid-template-columns: 1fr; }
+  .entry-poster { width: 100px; order: -1; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a class="site-title" href="/media-log/index.html">media-log</a>
+    <span class="site-subtitle">film, anime, dizi notları</span>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="/media-log/index.html">← back</a>
+  <div class="entry-header-with-poster">
+  <div class="entry-header">
+    <h1>Clannad</h1>
+    <div class="entry-attrs">
+      <span><span class="key">type</span><span class="val"><span class="tag tag-anime">Anime</span></span></span>
+      <span><span class="key">year</span><span class="val">2007</span></span>
+<span><span class="key">studio</span><span class="val">Kyoto Animation</span></span>
+<span><span class="key">status</span><span class="val">Planned</span></span>
+<span><span class="key">added</span><span class="val">08 May 2026</span></span>
+
+    </div>
+  </div>
+  <div class="entry-poster" style="background-image:url('https://image.tmdb.org/t/p/w500/jPBMYp4ddXkGJDSxxmaKBjzv2r3.jpg')"></div>
+</div>
+  <hr class="divider">
+  <div class="entry-body"><h2>First Impression</h2>
+<p>"Clannad" kelimesi tam japonca değilmiş. İrlandaca'da "clann" kelimesinden geliyormuş ve aile anlamına yakınmış.</p>
+<p>Arkadaşlarımın çoğuna sorduğumda harbi ağlatan bir seri olduğunu söylediler. özellikle bugün Azizim tarafından bana özellikle önerilen bir seriydi. Seriyi yapan Kyoto Animation şirketinin benim bildiğim birkaç tane daha anime ve anime filmi var. Violet Evergarden, A Silent Voice bunlar benim bildiğim örnekler. yani genelde böyle duygular hakkında geçen animelere sahipler. kesinlikle izleyeceğim.</p>
+
+<h2>After Finishing</h2>
+
+
+<h2>Themes</h2>
+<ul>
+<li>Drama</li>
+<li>Romance</li>
+<li>Slice of Life</li>
+<li>Supernatural</li>
+</ul>
+
+<h2>Favorite Scenes</h2>
+
+
+<h2>Progress</h2>
+<p>Episode 1 ✔ (daha başlanmadı)</p>
+
+</div>
+</div>
+</body>
+</html>
